@@ -24,10 +24,12 @@
         <div id="email">
           <label for="email-input">Email: </label>
           <input type="email" id="email-input" placeholder="Email" />
+          <div id="error-email"></div>
         </div>
-        <div id="Phone">
+        <div id="phone">
           <label for="phone-input">Phone: </label>
           <input type="tel" id="phone-input" placeholder="Phone" />
+          <div id="error-phoneNum"></div>
         </div>
         <button type="button" id="next-1">Next</button>
       </fieldset>
@@ -48,6 +50,7 @@
             <label for="skill-1-input">Skill <span>1</span>:</label>
             <input type="text" id="skill-1-input" placeholder="Enter Skill" />
             <button type="button" class="remove">Remove</button>
+            <button type="button" class="add">+ Add</button>
           </div>
           <div id="skill-2">
             <label for="skill-2-input">Skill <span>2</span>:</label>
@@ -69,7 +72,7 @@
       </fieldset>
       <fieldset id="step-3" style="display: none">
         <p>Step 3: Review</p>
-        <div id="first-name-rev">
+        <!-- <div id="first-name-rev">
           <p>First Name: <span></span></p>
         </div>
         <div id="last-name-rev">
@@ -89,7 +92,7 @@
         </div>
         <div id="years-of-exp-rev">
           <p>Years of Exp <span></span></p>
-        </div>
+        </div> -->
         <button type="button" id="back-2">Back</button>
         <button type="submit" id="submit">Submit</button>
       </fieldset>
