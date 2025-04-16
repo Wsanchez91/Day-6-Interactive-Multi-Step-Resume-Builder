@@ -1,45 +1,24 @@
-// === Step 1: Select DOM Elements ===
-// Select all form inputs, buttons, and review span targets
-
-// === Step 2: Set up resumeData object ===
-// This will hold all the form data in memory
-
-// === Step 3: Handle "Next" from Step 1 to Step 2 ===
-// Validate personal info (name, email, phone)
-// If valid, hide Step 1 and show Step 2
-
-// === Step 4: Handle "Next" from Step 2 to Step 3 ===
-// Gather work info, skills, and experience
-// Validate fields (position selected, years >= 0)
-// Dynamically collect all skill inputs
-// Update preview and review step
-
-// === Step 5: Handle "Back" buttons ===
-// Step 2 → Step 1
-// Step 3 → Step 2
-
-// === Step 6: Handle "Submit" ===
-// Log resumeData to console
-// Save to localStorage
-// Show confirmation message
-
-// === Step 7: Dynamic Skill Fields ===
-// Add and remove skill input fields on button click
-
-// === Step 8: Live Preview (Optional Bonus) ===
-// Update #preview section in real-time with resumeData
-
 const step1 = document.querySelector("#step-1");
 const step2 = document.querySelector("#step-2");
 const step3 = document.querySelector("#step-3");
 const preview = document.querySelector("#preview");
-
+const form = document.querySelector("#form");
+const firstName = document.querySelector("#first-name-input");
+const lastName = document.querySelector("#last-name-input");
+const email = document.querySelector("#email-input");
+const phoneNum = document.querySelector("#phone-input");
+const errorEmail = document.querySelector("#error-email");
+const errorPhone = document.querySelector("#error-phoneNum");
+const position = document.querySelector("#positions");
+const yearsOfExp = document.querySelector("#years-of-exp-input");
+const allSkillInputs = document.querySelectorAll("input[id^='skill-'");
 const next1Btn = document.querySelector("#next-1");
 const next2Btn = document.querySelector("#next-2");
 const back1Btn = document.querySelector("#back-1");
 const back2Btn = document.querySelector("#back-2");
-const submitBtn = document.querySelector("#submit");
+const previewBtn = document.querySelector("#submit");
 const addBtn = document.querySelector(".add");
+const submitFinalBtn = document.querySelector("#submit-final");
 
 const resumeInputs = JSON.parse(localStorage.getItem("inputs"));
 
@@ -54,27 +33,20 @@ const resumeData = {
 };
 
 next1Btn.addEventListener("click", () => {
-  const firstName = document.querySelector("#first-name-input");
-  const lastName = document.querySelector("#last-name-input");
-  const email = document.querySelector("#email-input");
-  const phoneNum = document.querySelector("#phone-input");
-  const errorEmail = document.querySelector("#error-email");
-  const errorPhone = document.querySelector("#error-phoneNum");
-
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phonePattern = /^(\(\d{3}\)\s*|\d{3}[-.\s]?)?\d{3}[-.\s]?\d{4}$/;
 
   errorEmail.textContent = "";
   errorPhone.textContent = "";
 
-  //   if (!emailPattern.test(email.value)) {
-  //     errorEmail.textContent = "Need to enter valid Email";
-  //     return;
-  //   }
-  //   if (!phonePattern.test(phoneNum.value)) {
-  //     errorPhone.textContent = "Need to enter valid Phone Number";
-  //     return;
-  //   }
+  // if (!emailPattern.test(email.value)) {
+  //   errorEmail.textContent = "Need to enter valid Email";
+  //   return;
+  // }
+  // if (!phonePattern.test(phoneNum.value)) {
+  //   errorPhone.textContent = "Need to enter valid Phone Number";
+  //   return;
+  // }
 
   resumeData.firstName = firstName.value.trim();
   resumeData.lastName = lastName.value.trim();
@@ -118,10 +90,36 @@ addBtn.addEventListener("click", () => {
 
 next2Btn.addEventListener("click", () => {
   const position = document.querySelector("#positions");
-  //   const addSkills = document.querySelector("#add-skills");
   const yearsOfExp = document.querySelector("#years-of-exp-input");
+  const allSkillInputs = document.querySelectorAll("input[id^='skill-'");
 
-  
+  const skills = [];
+  allSkillInputs.forEach((input) => {
+    const value = input.value.trim();
+    if (value) {
+      skills.push(value);
+    }
+  });
+
+  resumeData.position = position.value;
+  resumeData.skills = skills;
+  resumeData.experience = parseInt(yearsOfExp.value) || 0;
+
+  // Fill Step 3 review spans with data
+  document.querySelector("#first-name-rev span").textContent =
+    resumeData.firstName;
+  document.querySelector("#last-name-rev span").textContent =
+    resumeData.lastName;
+  document.querySelector("#email-rev span").textContent = resumeData.email;
+  document.querySelector("#phone-rev span").textContent = resumeData.phone;
+  document.querySelector("#positions-rev span").textContent =
+    resumeData.position;
+  document.querySelector("#skills-rev span").textContent =
+    resumeData.skills.join(", ");
+  document.querySelector("#years-of-exp-rev span").textContent =
+    resumeData.experience;
+
+  localStorage.setItem("inputs", JSON.stringify(resumeData));
 
   step2.style.display = "none";
   step3.style.display = "block";
@@ -137,9 +135,56 @@ back2Btn.addEventListener("click", () => {
   step2.style.display = "block";
 });
 
-submitBtn.addEventListener("click", () => {
+previewBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const skills = [];
+  allSkillInputs.forEach((input) => {
+    const value = input.value.trim();
+    if (value) {
+      skills.push(value);
+    }
+  });
+
+  resumeData.position = position.value;
+  resumeData.skills = skills;
+  resumeData.experience = parseInt(yearsOfExp.value) || 0;
+
+  // === Inline Resume Preview Editing ===
+  const previewFields = {
+    firstName: (document.querySelector("#preview-firstName").textContent =
+      resumeData.firstName),
+    lastName: (document.querySelector("#preview-lastName").textContent =
+      resumeData.lastName),
+    email: (document.querySelector("#preview-email").textContent =
+      resumeData.email),
+    phone: document.querySelector("#preview-phone"),
+    position: (document.querySelector("#preview-position").textContent =
+      resumeData.position),
+    skills: (document.querySelector("#preview-skills").textContent =
+      resumeData.skills),
+    experience: (document.querySelector("#preview-experience").textContent =
+      resumeData.experience),
+  };
+
+  //   Object.keys(previewFields).forEach((key) => {
+  //     previewFields[key].textContent = Array.isArray(resumeData[key])
+  //       ? resumeData[key].join(", ")
+  //       : resumeData[key];
+  //   });
+
+  form.style.display = "none";
+  preview.style.display = "block";
+
   localStorage.setItem("inputs", JSON.stringify(resumeData));
-  alert(
-    "You have successfully submitted your resume inputs, now review your inputs"
-  );
+});
+
+submitFinalBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  preview.style.display = "none";
+  form.style.display = "block";
+  step1.style.display = "block";
+  step2.style.display = "none";
+  step3.style.display = "none";
+  form.reset();
 });

@@ -10,8 +10,8 @@
     <header>
       <h1>Resume Builder</h1>
     </header>
-    <form>
-      <fieldset id="step-1">
+    <form id="form">
+      <fieldset id="step-1"
         <p>Step 1: Personal Info</p>
         <div id="first-name">
           <label for="first-name-input">First Name: </label>
@@ -48,11 +48,12 @@
         </div>
         <section class="skills">
           <div id="skill-1">
-            <label for="skill-1-input">Skill <span id="skill-index">1</span>:</label>
+            <label for="skill-1-input"
+              >Skill <span id="skill-index">1</span>:</label
+            >
             <input type="text" id="skill-1-input" placeholder="Enter Skill" />
             <button type="button" class="add">+ Add</button>
           </div>
-          
           <div id="add-skills"></div>
         </section>
         <div id="years-of-exp">
@@ -68,7 +69,7 @@
       </fieldset>
       <fieldset id="step-3" style="display: none">
         <p>Step 3: Review</p>
-        <!-- <div id="first-name-rev">
+        <div id="first-name-rev">
           <p>First Name: <span></span></p>
         </div>
         <div id="last-name-rev">
@@ -87,13 +88,29 @@
           <p>Skills: <span></span></p>
         </div>
         <div id="years-of-exp-rev">
-          <p>Years of Exp <span></span></p>
-        </div> -->
+          <p>Years of Exp: <span></span></p>
+        </div>
         <button type="button" id="back-2">Back</button>
-        <button type="submit" id="submit">Submit</button>
+        <button type="button" id="submit">Preview</button>
       </fieldset>
     </form>
-    <section id="preview"></section>
+    <section id="preview" style="display: none">
+      <h2>My Resume</h2>
+      <p>
+        <span contenteditable="true" id="preview-firstName"> </span
+        ><span contenteditable="true" id="preview-lastName"></span>
+      </p>
+      <p>
+        <span contenteditable="true" id="preview-position"></span>
+      </p>
+      <p><span contenteditable="true" id="preview-email"></span></p>
+      <p><span contenteditable="true" id="preview-skills"></span></p>
+      <p>
+        Experience:
+        <span contenteditable="true" id="preview-experience"></span> years
+      </p>
+      <button type="submit" id="submit-final">Submit</button>
+    </section>
     <script src="./script.js"></script>
   </body>
 </html>
