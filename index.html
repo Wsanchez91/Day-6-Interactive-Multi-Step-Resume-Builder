@@ -36,6 +36,7 @@
       <fieldset id="step-2" style="display: none">
         <p>Step 2: Work & Skills</p>
         <div id="dropdown">
+          <label for="positions">Position: </label>
           <select id="positions">
             <option value="Select" id="select" selected>Select</option>
             <option value="Payroll" id="payroll-opt">Payroll</option>
@@ -47,17 +48,12 @@
         </div>
         <section class="skills">
           <div id="skill-1">
-            <label for="skill-1-input">Skill <span>1</span>:</label>
+            <label for="skill-1-input">Skill <span id="skill-index">1</span>:</label>
             <input type="text" id="skill-1-input" placeholder="Enter Skill" />
-            <button type="button" class="remove">Remove</button>
             <button type="button" class="add">+ Add</button>
           </div>
-          <div id="skill-2">
-            <label for="skill-2-input">Skill <span>2</span>:</label>
-            <input type="text" id="skill-2-input" placeholder="Enter Skill" />
-            <button type="button" class="remove">Remove</button>
-            <button type="button" class="add">+ Add</button>
-          </div>
+          
+          <div id="add-skills"></div>
         </section>
         <div id="years-of-exp">
           <label for="years-of-exp-input">Years of Exp</label>
